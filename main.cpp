@@ -33,6 +33,16 @@ void MinHeap::bubbleUp(int index) {
   }
 }
 
+int MinHeap::pop() {
+  int min{heap[0]};
+  std::swap(heap[0], heap[heap.size() - 1]);
+  heap.pop_back();
+  bubbleDown(0);
+  return min;
+}
+
+void MinHeap::bubbleDown(int index) {}
+
 int main() {
   MinHeap h;
 
