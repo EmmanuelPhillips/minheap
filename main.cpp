@@ -15,13 +15,13 @@ public:
   bool empty() const;
 };
 
-bool MinHeap::empty() const { return heap.size(); }
+bool MinHeap::empty() const { return heap.size() == 0; }
 
 int MinHeap::top() const { return empty() ? 0 : heap[0]; }
 
 void MinHeap::push(int value) {
   heap.emplace_back(value);
-  bubbleUp(heap[heap.size() - 1]);
+  bubbleUp(heap.size() - 1);
 }
 
 void MinHeap::bubbleUp(int index) {
@@ -41,7 +41,27 @@ int MinHeap::pop() {
   return min;
 }
 
-void MinHeap::bubbleDown(int index) {}
+void MinHeap::bubbleDown(int index) {
+  int leftChild{(2 * index) + 1};
+  int rightChild{(2 * index) + 2};
+  while (leftChild < static_cast<int>(heap.size())) {
+    int smallest = index;
+    if (heap[leftChild] < heap[smallest]) {
+      smallest = leftChild;
+    }
+    if (rightChild < static_cast<int>(heap.size()) &&
+        heap[rightChild] < heap[smallest]) {
+      smallest = rightChild;
+    }
+    if (smallest == index) {
+      break;
+    }
+    std::swap(heap[index], heap[smallest]);
+    index = smallest;
+    leftChild = (2 * index) + 1;
+    rightChild = (2 * index) + 2;
+  }
+}
 
 int main() {
   MinHeap h;
