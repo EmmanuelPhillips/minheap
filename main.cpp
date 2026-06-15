@@ -34,6 +34,7 @@ void MinHeap::bubbleUp(int index) {
 }
 
 int MinHeap::pop() {
+
   int min{heap[0]};
   std::swap(heap[0], heap[heap.size() - 1]);
   heap.pop_back();
@@ -66,6 +67,23 @@ void MinHeap::bubbleDown(int index) {
 int main() {
   MinHeap h;
 
-  std::cout << "Goodbye\n";
+  std::vector<int> values{5, 10, 1, 6, 3, 8, 2, 7, 4, 9};
+
+  std::cout << "=== Push Test ===\n";
+
+  for (int v : values) {
+    h.push(v);
+    std::cout << "Pushed: " << v << ", Current Min: " << h.top() << '\n';
+  }
+
+  std::cout << "\n=== Pop Test ===\n";
+
+  while (!h.empty()) {
+    std::cout << h.pop() << ' ';
+  }
+
+  std::cout << "\n\nExpected:\n";
+  std::cout << "1 2 3 4 5 6 7 8 9 10\n";
+
   return 0;
 }
