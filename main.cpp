@@ -15,15 +15,6 @@ public:
   bool empty() const;
 };
 
-bool MinHeap::empty() const { return heap.size() == 0; }
-
-int MinHeap::top() const { return empty() ? 0 : heap[0]; }
-
-void MinHeap::push(int value) {
-  heap.emplace_back(value);
-  bubbleUp(heap.size() - 1);
-}
-
 void MinHeap::bubbleUp(int index) {
   int parentIndex{(index - 1) / 2};
   while (heap[index] < heap[parentIndex] && index != 0) {
@@ -31,15 +22,6 @@ void MinHeap::bubbleUp(int index) {
     index = parentIndex;
     parentIndex = (index - 1) / 2;
   }
-}
-
-int MinHeap::pop() {
-
-  int min{heap[0]};
-  std::swap(heap[0], heap[heap.size() - 1]);
-  heap.pop_back();
-  bubbleDown(0);
-  return min;
 }
 
 void MinHeap::bubbleDown(int index) {
@@ -63,6 +45,26 @@ void MinHeap::bubbleDown(int index) {
     rightChild = (2 * index) + 2;
   }
 }
+
+void MinHeap::push(int value) {
+  heap.emplace_back(value);
+  bubbleUp(heap.size() - 1);
+}
+
+int MinHeap::pop() {
+  if (empty()) {
+    throw std::runtime_error("Heap is empty");
+  }
+  int min{heap[0]};
+  std::swap(heap[0], heap[heap.size() - 1]);
+  heap.pop_back();
+  bubbleDown(0);
+  return min;
+}
+
+bool MinHeap::empty() const { return heap.size() == 0; }
+
+int MinHeap::top() const { return empty() ? 0 : heap[0]; }
 
 int main() {
   MinHeap h;
